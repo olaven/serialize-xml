@@ -1,4 +1,4 @@
-# serialize-xml 
+# serialize-xml ![Test](https://github.com/olaven/serialize-xml/workflows/Test/badge.svg)
 A simple [deno](deno.land) module for serializing objects to XML. 
 
 ## Usage 
