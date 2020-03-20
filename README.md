@@ -1,5 +1,5 @@
 # serialize-xml 
-A simple module for serializing objects to XML. 
+A simple [deno](deno.land) module for serializing objects to XML. 
 
 ## Usage 
 There are two types that are relevant: 
