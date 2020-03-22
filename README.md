@@ -8,6 +8,8 @@ There are two types that are relevant:
 
 ## Example 
 ```ts
+import  { serialize } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.1.0/mod.ts"
+
 const xml = serialize({
     name: "my_tag_name", 
     children: [
