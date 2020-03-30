@@ -7,7 +7,7 @@ There is _one_ concept here:
 
 ## Example 
 ```ts
-import  { serialize } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.1.0/mod.ts"
+import  { serialize } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.2.0/mod.ts"
 
 const xml = serialize({
     name: "my_tag_name", 
