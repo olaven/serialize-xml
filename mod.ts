@@ -1,13 +1,12 @@
-export interface Attribute {
-  key: string;
-  value: string;
-}
-
+/**
+ * Represents an XML tag. 
+ */
 export interface Tag {
   name: string;
   children: Tag[] | string;
-  attributes: Attribute[];
+  attributes: [string, string][];
 }
+
 
 const get_content = (tag: Tag) => {
   return (typeof (tag.children) === "string")
@@ -19,12 +18,13 @@ const get_content = (tag: Tag) => {
 
 const format_attributes = (tag: Tag) =>
   tag.attributes
-    .map(attribute => `${attribute.key}="${attribute.value}"`)
+    .map(attribute => `${attribute[0]}="${attribute[1]}"`)
     .join(" ");
 
 /**
- * Serialze the tag-data structure 
- * to a string. 
+ * Serializes given tag and its children 
+ * to an XML string.  
+ * @param {Tag} tag the tag to serialize 
  */
 export const serialize = (tag: Tag): string => {
   const content = get_content(tag);

@@ -2,13 +2,12 @@
 A simple [deno](deno.land) module for serializing objects to XML. 
 
 ## Usage 
-There are two types that are relevant: 
-1. `Tag` - representing a tag, like `<this></this>`
-2. `Attribute` - `<tag represents="key value pairs like this"></tag>`
+There is _one_ concept here:
+* `Tag` - representing a tag, like `<this></this>`
 
 ## Example 
 ```ts
-import  { serialize } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.1.0/mod.ts"
+import  { serialize } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.2.0/mod.ts"
 
 const xml = serialize({
     name: "my_tag_name", 
