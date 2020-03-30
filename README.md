@@ -2,9 +2,8 @@
 A simple [deno](deno.land) module for serializing objects to XML. 
 
 ## Usage 
-There are two types that are relevant: 
-1. `Tag` - representing a tag, like `<this></this>`
-2. `Attribute` - `<tag represents="key value pairs like this"></tag>`
+There is _one_ concept here:
+* `Tag` - representing a tag, like `<this></this>`
 
 ## Example 
 ```ts

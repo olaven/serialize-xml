@@ -28,8 +28,8 @@ test("serializing includes attributes", () => {
     name: "tag",
     children: [],
     attributes: [
-      { key: "key1", value: "value1" },
-      { key: "key2", value: "value2" }
+      ["key1", "value1"], 
+      ["key2", "value2"],
     ]
   };
 
@@ -46,12 +46,12 @@ test("serializing includes attributes on children", () => {
         name: "child",
         children: [],
         attributes: [
-          { key: "child_key", value: "child_value" }
+          ["child_key", "child_value"]
         ]
       }
     ],
     attributes: [
-      { key: "parent_key", value: "parent_value" }
+      [ "parent_key", "parent_value"]
     ]
   };
 
@@ -69,12 +69,12 @@ test("serializing includes attributes on children _and_ string child", () => {
         name: "child",
         children: "inner child value",
         attributes: [
-          { key: "child_key", value: "child_value" }
+          [ "child_key", "child_value"]
         ]
       }
     ],
     attributes: [
-      { key: "parent_key", value: "parent_value" }
+      [ "parent_key", "parent_value" ]
     ]
   };
 
