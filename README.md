@@ -15,12 +15,14 @@ const xml = serialize({
         {
             name: "sub_tag", 
             children: "inner_content_of_tag", 
-            attributes: []
+            attributes: [
+                ["attribute_key", "attribute_value"]
+            ]
         }
     ],
     attributes: []
 });
 
-//prints: `<my_tag_name><sub_tag>inner_content_of_tag</sub_tag></my_tag_name>`
+//prints: '<my_tag_name><sub_tag attribute_key="attribute_value">inner_content_of_tag</sub_tag></my_tag_name>'
 console.log("serialized: ", xml); 
 ```
