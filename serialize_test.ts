@@ -10,10 +10,10 @@ test("can serialize tag", () => {
       {
         name: "sub_tag",
         children: "inner_content_of_tag",
-        attributes: []
-      }
+        attributes: [],
+      },
     ],
-    attributes: []
+    attributes: [],
   };
 
   const actual = serialize(tag);
@@ -28,9 +28,9 @@ test("serializing includes attributes", () => {
     name: "tag",
     children: [],
     attributes: [
-      ["key1", "value1"], 
+      ["key1", "value1"],
       ["key2", "value2"],
-    ]
+    ],
   };
 
   const actual = serialize(tag);
@@ -46,13 +46,13 @@ test("serializing includes attributes on children", () => {
         name: "child",
         children: [],
         attributes: [
-          ["child_key", "child_value"]
-        ]
-      }
+          ["child_key", "child_value"],
+        ],
+      },
     ],
     attributes: [
-      [ "parent_key", "parent_value"]
-    ]
+      ["parent_key", "parent_value"],
+    ],
   };
 
   const actual = serialize(tag);
@@ -69,13 +69,13 @@ test("serializing includes attributes on children _and_ string child", () => {
         name: "child",
         children: "inner child value",
         attributes: [
-          [ "child_key", "child_value"]
-        ]
-      }
+          ["child_key", "child_value"],
+        ],
+      },
     ],
     attributes: [
-      [ "parent_key", "parent_value" ]
-    ]
+      ["parent_key", "parent_value"],
+    ],
   };
 
   const actual = serialize(tag);
@@ -91,15 +91,15 @@ test("serializing includes attributes on children _and_ string child", () => {
       {
         name: "first_child",
         children: "first_val",
-        attributes: []
+        attributes: [],
       },
       {
         name: "second_child",
         children: "second_val",
-        attributes: []
-      }
+        attributes: [],
+      },
     ],
-    attributes: []
+    attributes: [],
   };
 
   const actual = serialize(tag);
@@ -109,20 +109,22 @@ test("serializing includes attributes on children _and_ string child", () => {
 });
 
 test("Test the same example as in readme", () => {
-
   const xml = serialize({
-      name: "my_tag_name", 
-      children: [
-          {
-              name: "sub_tag", 
-              children: "inner_content_of_tag", 
-              attributes: [
-                  ["attribute_key", "attribute_value"]
-              ]
-          }
-      ],
-      attributes: []
+    name: "my_tag_name",
+    children: [
+      {
+        name: "sub_tag",
+        children: "inner_content_of_tag",
+        attributes: [
+          ["attribute_key", "attribute_value"],
+        ],
+      },
+    ],
+    attributes: [],
   });
 
-  assertEquals(xml, '<my_tag_name><sub_tag attribute_key="attribute_value">inner_content_of_tag</sub_tag></my_tag_name>');
-})
+  assertEquals(
+    xml,
+    '<my_tag_name><sub_tag attribute_key="attribute_value">inner_content_of_tag</sub_tag></my_tag_name>',
+  );
+});
