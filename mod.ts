@@ -7,13 +7,12 @@ export interface Tag {
   attributes: [string, string][];
 }
 
-const get_content = (tag: Tag) => {
-  return (typeof (tag.children) === "string")
+const get_content = (tag: Tag) =>
+  (typeof (tag.children) === "string")
     ? tag.children
     : tag.children
       .map((child) => serialize(child))
       .join("");
-};
 
 const format_attributes = (tag: Tag) =>
   tag.attributes
