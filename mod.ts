@@ -7,6 +7,10 @@ export interface Tag {
   attributes: [string, string][];
 }
 
+export const tag = (name: string, children: string | Tag[] = "", attributes: [string, string][] = []): Tag => ({
+  name, children, attributes
+})
+
 const get_content = (tag: Tag) =>
   (typeof (tag.children) === "string")
     ? tag.children

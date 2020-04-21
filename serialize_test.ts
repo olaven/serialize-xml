@@ -1,4 +1,4 @@
-import { serialize, Tag } from "./mod.ts";
+import { serialize, Tag, tag } from "./mod.ts";
 import { assertEquals } from "./deps.ts";
 
 const { test } = Deno;
@@ -127,4 +127,82 @@ test("Test the same example as in readme", () => {
     xml,
     '<my_tag_name><sub_tag attribute_key="attribute_value">inner_content_of_tag</sub_tag></my_tag_name>',
   );
+});
+
+
+test("Attribtes are optional", () => {
+
+  //NOTE: no attributes defined 
+  const xml = serialize(tag("tag", "content"))
+
+  assertEquals(xml, `<tag>content</tag>`);
+})
+
+test("Simple combination with with object API", () => {
+
+  const xml = serialize({
+    name: "outer", 
+    children: [
+      tag("first_inner", "content"), 
+      tag("second_inner", "content", [["key", "value"]]),
+    ], 
+    attributes: [] //NOTE: not nececcary with `.tag()`
+  })
+
+  assertEquals(xml, `<outer><first_inner>content</first_inner><second_inner key="value">content</second_inner></outer>`)
+})
+
+test("More complex example with functional API", () => {
+
+  const xml = serialize(
+    tag("outer", [
+      tag("inner", "inner_content", [
+        ["first_key", "first_value"],
+        ["second_key", "second_value"],
+      ]),
+    ])
+  );
+
+  assertEquals(xml, `<outer><inner first_key="first_value" second_key="second_value">inner_content</inner></outer>`);
+})
+
+test("Another combining of functional and object approach", () => {
+
+  const xml = serialize(
+    tag("outer", [
+      {
+        name: "inner", 
+        children: "inner_content", 
+        attributes: [
+          ["first_key", "first_value"],
+          ["second_key", "second_value"],
+        ]
+      }
+    ])
+  );
+    
+  assertEquals(xml, `<outer><inner first_key="first_value" second_key="second_value">inner_content</inner></outer>`);
+}); 
+
+test("Second example in README works as written", () => {
+
+  const xml = serialize(
+    tag("outer", 
+        [
+          tag("inner", "content")
+        ], 
+        [
+            ["key", "value"]
+        ]
+    )
+  ); 
+
+  assertEquals(xml, `<outer key="value"><inner>content</inner></outer>`)
+});
+
+
+test("content can be omitted", () => {
+  
+  const xml = serialize(tag("name"))
+  assertEquals(xml, `<name></name>`);
 });
