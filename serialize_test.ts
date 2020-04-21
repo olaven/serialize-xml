@@ -1,4 +1,4 @@
-import { serialize, Tag } from "./mod.ts";
+import { serialize, Tag, tag } from "./mod.ts";
 import { assertEquals } from "./deps.ts";
 
 const { test } = Deno;
@@ -132,11 +132,24 @@ test("Test the same example as in readme", () => {
 
 test("Attribtes are optional", () => {
 
-  const xml = serialize({
-    name: "tag", 
-    children: "content", 
-    //attributes: []
-  });
+  //NOTE: no attributes defined 
+  const xml = serialize(tag("tag", "content"))
 
   assertEquals(xml, `<tag>content</tag>`);
+})
+
+test("More complex example with functional API", () => {
+
+  const tag_object = 
+
+  const xml = serialize(
+    tag("outer", [
+      tag("inner", "inner_content", [
+        ["first_key", "first_value"],
+        ["second_key", "second_value"],
+      ]),
+    ]);
+  );
+
+  assertEquals(xml, `<outer><inner first_key="first_value" second_key="second_value">inner_content</inner></outer>`);
 })
