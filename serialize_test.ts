@@ -128,3 +128,15 @@ test("Test the same example as in readme", () => {
     '<my_tag_name><sub_tag attribute_key="attribute_value">inner_content_of_tag</sub_tag></my_tag_name>',
   );
 });
+
+
+test("Attribtes are optional", () => {
+
+  const xml = serialize({
+    name: "tag", 
+    children: "content", 
+    //attributes: []
+  });
+
+  assertEquals(xml, `<tag>content</tag>`);
+})
