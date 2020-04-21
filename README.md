@@ -27,7 +27,9 @@ const xml = serialize({
 console.log("serialized: ", xml); 
 ```
 
-Alternatively, you can build tags using the `tag`-function, like this: 
+__EXPERIMENTAL__
+Alternatively, you can build tags using the `tag`-function. The advantage of that is that 
+`content` and `attributes` can be omitted if it is not needed. 
 ```ts
 import  { serialize, tag } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.3.0/mod.ts"
 

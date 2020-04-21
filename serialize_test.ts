@@ -197,6 +197,12 @@ test("Second example in README works as written", () => {
     )
   ); 
 
-  //prints: <outer><inner key="value">content</inner></outer>
   assertEquals(xml, `<outer key="value"><inner>content</inner></outer>`)
+});
+
+
+test("content can be omitted", () => {
+  
+  const xml = serialize(tag("name"))
+  assertEquals(xml, `<name></name>`);
 });

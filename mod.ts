@@ -7,7 +7,7 @@ export interface Tag {
   attributes: [string, string][];
 }
 
-export const tag = (name: string, children: string | Tag[], attributes: [string, string][] = []): Tag => ({
+export const tag = (name: string, children: string | Tag[] = "", attributes: [string, string][] = []): Tag => ({
   name, children, attributes
 })
 
