@@ -20,7 +20,7 @@ const get_content = (tag: Tag) =>
 
 const format_attributes = (tag: Tag) =>
   tag.attributes
-    .map((attribute) => `${attribute[0]}="${attribute[1]}"`)
+    .map(([key, value]) => `${key}="${value}"`)
     .join(" ");
 
 const format_tag = (name: string, attributes: string, content: string) =>
