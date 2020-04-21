@@ -183,3 +183,20 @@ test("Another combining of functional and object approach", () => {
     
   assertEquals(xml, `<outer><inner first_key="first_value" second_key="second_value">inner_content</inner></outer>`);
 }); 
+
+test("Second example in README works as written", () => {
+
+  const xml = serialize(
+    tag("outer", 
+        [
+          tag("inner", "content")
+        ], 
+        [
+            ["key", "value"]
+        ]
+    )
+  ); 
+
+  //prints: <outer><inner key="value">content</inner></outer>
+  assertEquals(xml, `<outer key="value"><inner>content</inner></outer>`)
+});
