@@ -140,16 +140,34 @@ test("Attribtes are optional", () => {
 
 test("More complex example with functional API", () => {
 
-  const tag_object = 
-
   const xml = serialize(
     tag("outer", [
       tag("inner", "inner_content", [
         ["first_key", "first_value"],
         ["second_key", "second_value"],
       ]),
-    ]);
+    ])
   );
 
   assertEquals(xml, `<outer><inner first_key="first_value" second_key="second_value">inner_content</inner></outer>`);
 })
+
+/* test("Combining functional and object approach", () => {
+
+  const tag_object = 
+
+  const xml = serialize(
+    tag("outer", [
+      {
+        name: "inner", 
+        children: "inner_content", 
+        attributes: [
+          ["first_key", "first_value"],
+          ["second_key", "second_value"],
+        ]
+      }
+    ]);
+    );
+    
+    assertEquals(xml, `<outer><inner first_key="first_value" second_key="second_value">inner_content</inner></outer>`);
+  }) */
