@@ -7,7 +7,7 @@ There is _one_ concept here:
 
 ## Examples
 ```ts
-import  { serialize } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.3.0/mod.ts"
+import  { serialize } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.3.1/mod.ts"
 
 const xml = serialize({
     name: "my_tag_name", 
@@ -31,7 +31,7 @@ __EXPERIMENTAL__
 Alternatively, you can build tags using the `tag`-function. The advantage of that is that 
 `content` and `attributes` can be omitted if it is not needed. 
 ```ts
-import  { serialize, tag } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.3.0/mod.ts"
+import  { serialize, tag } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.3.1/mod.ts"
 
 const xml = serialize(
     tag("outer", 
