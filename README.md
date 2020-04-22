@@ -27,11 +27,18 @@ const xml = serialize({
 console.log("serialized: ", xml); 
 ```
 
-__EXPERIMENTAL__
+__EXPERIMENTAL__: 
 Alternatively, you can build tags using the `tag`-function. The advantage of that is that 
-`content` and `attributes` can be omitted if it is not needed. 
+`children` and `attributes` can be omitted if it is not needed. 
 ```ts
 import  { serialize, tag } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.3.1/mod.ts"
+
+//<name></name>
+const without_children = serialize(tag("name"))
+//<name>children</name>
+const without_attributes = serialize(tag("name", "children"))
+//<name key="value">children</name>
+const full_tag = serialize(tag("name", "children", [["key", "value"]]))
 
 const xml = serialize(
     tag("outer", 

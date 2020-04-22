@@ -200,8 +200,21 @@ test("Second example in README works as written", () => {
   assertEquals(xml, `<outer key="value"><inner>content</inner></outer>`)
 });
 
+test("Tiny examples from second in from README.md works", () => {
 
-test("content can be omitted", () => {
+  //<name></name>
+  const without_children = serialize(tag("name"));
+  //<name>children</name>
+  const without_attributes = serialize(tag("name", "children"));
+  //<name key="value">children</name>
+  const full_tag = serialize(tag("name", "children", [["key", "value"]]));
+
+  assertEquals(without_children, `<name></name>`); 
+  assertEquals(without_attributes, `<name>children</name>`); 
+  assertEquals(full_tag, `<name key="value">children</name>`)
+})
+
+test("children can be omitted with tag function", () => {
   
   const xml = serialize(tag("name"))
   assertEquals(xml, `<name></name>`);
