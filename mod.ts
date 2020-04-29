@@ -10,7 +10,7 @@ export interface Tag {
 /**
  * Returns a `Tag`
  * @param name name of the tag 
- * @param children subtags/content
+ * @param children subtags/string content 
  * @param attributes key/value attributes of the tag
  */
 export function tag(name: string, children: string | Tag[] = "", attributes: [string, string][] = []): Tag {
@@ -23,10 +23,10 @@ export function tag(name: string, children: string | Tag[] = "", attributes: [st
  * @param {Tag} tag the tag to serialize 
  */
 export function serialize(tag: Tag): string {
-  const content = get_children(tag);
+  const children = get_children(tag);
   const attributes = format_attributes(tag);
 
-  return format_tag(tag.name, attributes, content);
+  return format_tag(tag.name, attributes, children);
 };
 
 
