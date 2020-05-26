@@ -5,7 +5,6 @@ export interface Tag {
   name: string;
   children: Tag[] | string;
   attributes: [string, string][];
-  declaration: boolean; 
 }
 
 /**
@@ -14,20 +13,21 @@ export interface Tag {
  * @param children subtags/string content 
  * @param attributes key/value attributes of the tag
  */
-export function tag(name: string, children: string | Tag[] = "", attributes: [string, string][] = [], declaration = false): Tag {
-  return {name, children, attributes, declaration}
+export function tag(name: string, children: string | Tag[] = "", attributes: [string, string][] = []): Tag {
+  return {name, children, attributes}
 }
 
 /**
  * Serializes given tag and its children 
  * to an XML string.  
  * @param {Tag} tag the tag to serialize 
+ * @param {boolean} declaration the outer tag is an xml-declaration
  */
-export function serialize(tag: Tag): string {
+export function serialize(tag: Tag, declaration = false): string {
   const children = get_children(tag);
   const attributes = format_attributes(tag);
 
-  return format_tag(tag.name, attributes, children, tag.declaration);
+  return format_tag(tag.name, attributes, children, declaration);
 };
 
 
