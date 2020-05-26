@@ -11,9 +11,11 @@ test("can serialize tag", () => {
         name: "sub_tag",
         children: "inner_content_of_tag",
         attributes: [],
+        declaration: false,
       },
     ],
     attributes: [],
+    declaration: false,
   };
 
   const actual = serialize(tag);
@@ -31,6 +33,7 @@ test("serializing includes attributes", () => {
       ["key1", "value1"],
       ["key2", "value2"],
     ],
+    declaration: false,
   };
 
   const actual = serialize(tag);
@@ -48,11 +51,13 @@ test("serializing includes attributes on children", () => {
         attributes: [
           ["child_key", "child_value"],
         ],
+        declaration: false, 
       },
     ],
     attributes: [
       ["parent_key", "parent_value"],
     ],
+    declaration: false,
   };
 
   const actual = serialize(tag);
@@ -71,11 +76,13 @@ test("serializing includes attributes on children _and_ string child", () => {
         attributes: [
           ["child_key", "child_value"],
         ],
+        declaration: false,
       },
     ],
     attributes: [
       ["parent_key", "parent_value"],
     ],
+    declaration: false,
   };
 
   const actual = serialize(tag);
@@ -92,14 +99,17 @@ test("serializing includes attributes on children _and_ string child", () => {
         name: "first_child",
         children: "first_val",
         attributes: [],
+        declaration: false,
       },
       {
         name: "second_child",
         children: "second_val",
         attributes: [],
+        declaration: false,
       },
     ],
     attributes: [],
+    declaration: false,
   };
 
   const actual = serialize(tag);
@@ -118,9 +128,11 @@ test("Test the same example as in readme", () => {
         attributes: [
           ["attribute_key", "attribute_value"],
         ],
+        declaration: false,
       },
     ],
     attributes: [],
+    declaration: false,
   });
 
   assertEquals(
@@ -146,7 +158,8 @@ test("Simple combination with with object API", () => {
       tag("first_inner", "content"), 
       tag("second_inner", "content", [["key", "value"]]),
     ], 
-    attributes: [] //NOTE: not nececcary with `.tag()`
+    attributes: [], //NOTE: not nececcary with `.tag()`
+    declaration: false, //NOTE: not nececcary with `.tag()`
   })
 
   assertEquals(xml, `<outer><first_inner>content</first_inner><second_inner key="value">content</second_inner></outer>`)
@@ -176,13 +189,21 @@ test("Another combining of functional and object approach", () => {
         attributes: [
           ["first_key", "first_value"],
           ["second_key", "second_value"],
-        ]
+        ],
+        declaration: false,
       }
     ])
   );
     
   assertEquals(xml, `<outer><inner first_key="first_value" second_key="second_value">inner_content</inner></outer>`);
 }); 
+
+test("Can specify declaration functionaly", () => {
+
+  const xml = serialize(tag("name", "content", [], true))
+  const expected = '<?name>content</name?>'; 
+  assertEquals(xml, expected);
+})
 
 test("Second example in README works as written", () => {
 

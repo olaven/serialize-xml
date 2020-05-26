@@ -5,6 +5,7 @@ export interface Tag {
   name: string;
   children: Tag[] | string;
   attributes: [string, string][];
+  declaration: boolean; 
 }
 
 /**
@@ -13,8 +14,8 @@ export interface Tag {
  * @param children subtags/string content 
  * @param attributes key/value attributes of the tag
  */
-export function tag(name: string, children: string | Tag[] = "", attributes: [string, string][] = []): Tag {
-  return {name, children, attributes}
+export function tag(name: string, children: string | Tag[] = "", attributes: [string, string][] = [], declaration = false): Tag {
+  return {name, children, attributes, declaration}
 }
 
 /**
@@ -26,7 +27,7 @@ export function serialize(tag: Tag): string {
   const children = get_children(tag);
   const attributes = format_attributes(tag);
 
-  return format_tag(tag.name, attributes, children);
+  return format_tag(tag.name, attributes, children, tag.declaration);
 };
 
 
@@ -42,7 +43,7 @@ const format_attributes = (tag: Tag) =>
     .map(([key, value]) => `${key}="${value}"`)
     .join(" ");
 
-const format_tag = (name: string, attributes: string, content: string) =>
-  `<${name}${attributes.length > 0
+const format_tag = (name: string, attributes: string, content: string, declaration: boolean) =>
+  `<${declaration? '?': ''}${name}${attributes.length > 0
     ? ` ${attributes}`
-    : ``}>${content}</${name}>`;
+    : ``}>${content}</${name}${declaration? '?': ''}>`;
