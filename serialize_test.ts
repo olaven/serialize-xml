@@ -1,4 +1,4 @@
-import { serialize, Tag, tag } from "./mod.ts";
+import { serialize, Tag, tag, declaration } from "./mod.ts";
 import { assertEquals } from "./deps.ts";
 
 const { test } = Deno;
@@ -187,8 +187,15 @@ test("Another combining of functional and object approach", () => {
 
 test("Can specify declaration through serialize", () => {
 
-  const xml = serialize(tag("name", "content", []), true)
-  const expected = '<?name>content</name?>'; 
+  const xml = serialize(declaration([]))
+  const expected = '<?xml ?>'; 
+  assertEquals(xml, expected);
+})
+
+test("Declaration example in readme", () => {
+
+  const xml = serialize(declaration([["version", "1.0"]]));
+  const expected = '<?xml version="1.0"?>'
   assertEquals(xml, expected);
 })
 

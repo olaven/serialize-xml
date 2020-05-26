@@ -8,6 +8,13 @@ export interface Tag {
 }
 
 /**
+  * Represents an XML declaration.
+ */
+ export interface Declaration {
+   attributes: [string, string][]
+ }
+
+/**
  * Returns a `Tag`
  * @param name name of the tag 
  * @param children subtags/string content 
@@ -17,18 +24,34 @@ export function tag(name: string, children: string | Tag[] = "", attributes: [st
   return {name, children, attributes}
 }
 
+
+export function declaration(attributes: [string, string][]): Declaration {
+  return { attributes }
+}
+
 /**
  * Serializes given tag and its children 
  * to an XML string.  
- * @param {Tag} tag the tag to serialize 
+ * @param {Tag | Declaration} node the tag (or declaration) to serialize 
  * @param {boolean} declaration the outer tag is an xml-declaration
  */
-export function serialize(tag: Tag, declaration = false): string {
-  const children = get_children(tag);
-  const attributes = format_attributes(tag);
+export function serialize(node: Tag | Declaration): string {
 
-  return format_tag(tag.name, attributes, children, declaration);
+  const attributes = format_attributes(node);
+
+  //NOTE: assuming that this is a Tag if name is present
+  if (node.hasOwnProperty("name")) {
+    
+    const tag = node as Tag; 
+    const children = get_children(tag);
+    return format_tag(tag.name, attributes, children);
+  } else {
+
+    return format_declaration(attributes);
+  }
 };
+
+const format_declaration = (attributes: string) => `<?xml ${attributes}?>`
 
 
 const get_children = (tag: Tag) =>
@@ -38,12 +61,12 @@ const get_children = (tag: Tag) =>
       .map((child) => serialize(child))
       .join("");
 
-const format_attributes = (tag: Tag) =>
-  tag.attributes
+const format_attributes = (node: Tag | Declaration) =>
+  node.attributes
     .map(([key, value]) => `${key}="${value}"`)
     .join(" ");
 
-const format_tag = (name: string, attributes: string, content: string, declaration: boolean) =>
-  `<${declaration? '?': ''}${name}${attributes.length > 0
+const format_tag = (name: string, attributes: string, content: string) =>
+  `<${name}${attributes.length > 0
     ? ` ${attributes}`
-    : ``}>${content}</${name}${declaration? '?': ''}>`;
+    : ``}>${content}</${name}>`;
