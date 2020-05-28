@@ -8,6 +8,13 @@ export interface Tag {
 }
 
 /**
+  * Represents an XML declaration.
+ */
+ export interface Declaration {
+   attributes: [string, string][]
+ }
+
+/**
  * Returns a `Tag`
  * @param name name of the tag 
  * @param children subtags/string content 
@@ -17,17 +24,38 @@ export function tag(name: string, children: string | Tag[] = "", attributes: [st
   return {name, children, attributes}
 }
 
-/**
- * Serializes given tag and its children 
- * to an XML string.  
- * @param {Tag} tag the tag to serialize 
- */
-export function serialize(tag: Tag): string {
-  const children = get_children(tag);
-  const attributes = format_attributes(tag);
 
-  return format_tag(tag.name, attributes, children);
-};
+export function declaration(attributes: [string, string][]): Declaration {
+  return { attributes }
+}
+
+/**
+ * Serializes given tag and its children
+ * to an XML string.
+ * @param nodes
+ */
+export function serialize(...nodes: (Tag[] | Declaration[])): string {
+
+  return (nodes as Array<Tag | Declaration>)
+      .map((node: Tag | Declaration) => {
+
+        const attributes = format_attributes(node);
+
+        //NOTE: assuming that this is a Tag if name is present
+        if (node.hasOwnProperty("name")) {
+
+          const tag = node as Tag;
+          const children = get_children(tag);
+          return format_tag(tag.name, attributes, children);
+        } else {
+
+          return format_declaration(attributes);
+        }
+      })
+      .join("");
+}
+
+const format_declaration = (attributes: string) => `<?xml ${attributes}?>`
 
 
 const get_children = (tag: Tag) =>
@@ -37,8 +65,8 @@ const get_children = (tag: Tag) =>
       .map((child) => serialize(child))
       .join("");
 
-const format_attributes = (tag: Tag) =>
-  tag.attributes
+const format_attributes = (node: Tag | Declaration) =>
+  node.attributes
     .map(([key, value]) => `${key}="${value}"`)
     .join(" ");
 

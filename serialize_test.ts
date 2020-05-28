@@ -1,4 +1,4 @@
-import { serialize, Tag, tag } from "./mod.ts";
+import { serialize, Tag, tag, declaration } from "./mod.ts";
 import { assertEquals } from "./deps.ts";
 
 const { test } = Deno;
@@ -10,7 +10,7 @@ test("can serialize tag", () => {
       {
         name: "sub_tag",
         children: "inner_content_of_tag",
-        attributes: [],
+        attributes: [], 
       },
     ],
     attributes: [],
@@ -47,7 +47,7 @@ test("serializing includes attributes on children", () => {
         children: [],
         attributes: [
           ["child_key", "child_value"],
-        ],
+        ], 
       },
     ],
     attributes: [
@@ -109,7 +109,8 @@ test("serializing includes attributes on children _and_ string child", () => {
 });
 
 test("Test the same example as in readme", () => {
-  const xml = serialize({
+
+  const t: Tag = {
     name: "my_tag_name",
     children: [
       {
@@ -121,7 +122,9 @@ test("Test the same example as in readme", () => {
       },
     ],
     attributes: [],
-  });
+  };
+
+  const xml = serialize(t);
 
   assertEquals(
     xml,
@@ -146,7 +149,8 @@ test("Simple combination with with object API", () => {
       tag("first_inner", "content"), 
       tag("second_inner", "content", [["key", "value"]]),
     ], 
-    attributes: [] //NOTE: not nececcary with `.tag()`
+    attributes: [], //NOTE: not nececcary with `.tag()`
+  //NOTE: not nececcary with `.tag()`
   })
 
   assertEquals(xml, `<outer><first_inner>content</first_inner><second_inner key="value">content</second_inner></outer>`)
@@ -176,13 +180,27 @@ test("Another combining of functional and object approach", () => {
         attributes: [
           ["first_key", "first_value"],
           ["second_key", "second_value"],
-        ]
+        ],
       }
     ])
   );
     
   assertEquals(xml, `<outer><inner first_key="first_value" second_key="second_value">inner_content</inner></outer>`);
 }); 
+
+test("Can specify declaration through serialize", () => {
+
+  const xml = serialize(declaration([]));
+  const expected = '<?xml ?>'; 
+  assertEquals(xml, expected);
+});
+
+test("Declaration example in readme", () => {
+
+  const xml = serialize(declaration([["version", "1.0"]]));
+  const expected = '<?xml version="1.0"?>';
+  assertEquals(xml, expected);
+});
 
 test("Second example in README works as written", () => {
 
@@ -212,10 +230,64 @@ test("Tiny examples from second in from README.md works", () => {
   assertEquals(without_children, `<name></name>`); 
   assertEquals(without_attributes, `<name>children</name>`); 
   assertEquals(full_tag, `<name key="value">children</name>`)
-})
+});
+
+
+test("Chaining example from readme", () => {
+
+  /*
+      <?xml version="1.0"?>
+      <first_parent></first_parent>
+      <second_parent>
+          <child></child>
+      </second_parent>
+  */
+
+  const xml = serialize(
+      declaration([["version", "1.0"]]),
+      tag("first_parent"),
+      tag("second_parent", [
+        tag("child")
+      ])
+  );
+
+  assertEquals(xml, '<?xml version=\"1.0\"?><first_parent></first_parent><second_parent><child></child></second_parent>');
+});
 
 test("children can be omitted with tag function", () => {
   
-  const xml = serialize(tag("name"))
+  const xml = serialize(tag("name"));
   assertEquals(xml, `<name></name>`);
+});
+
+test("Serialize function can chain parents", () => {
+
+  const xml = serialize(
+      tag("first_parent"),
+      tag("second_parent")
+  );
+
+  assertEquals(xml, `<first_parent></first_parent><second_parent></second_parent>`)
+});
+
+test("Serialize function can chain declarations and tags", () => {
+
+  const xml = serialize(
+      declaration([["version", "1.0"]]),
+      tag("tag")
+  );
+
+  assertEquals(xml, `<?xml version="1.0"?><tag></tag>`)
+});
+
+test("Serialize function can chain declarations and tags with children", () => {
+
+  const xml = serialize(
+      declaration([["version", "1.0"]]),
+      tag("parent", [
+          tag("child")
+      ])
+  );
+
+  assertEquals(xml, `<?xml version="1.0"?><parent><child></child></parent>`)
 });
