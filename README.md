@@ -41,7 +41,7 @@ console.log("serialized declaration", xml);
 ```
 
 ### Multiple parens
-``typescript
+```typescript
 
 /*
     <?xml version="1.0"?>
@@ -58,7 +58,7 @@ const xml = serialize(
         tag("child")
     ])
 ); 
-``
+```
 
 ### Alternatively, build tags by passing an object.  
 ```ts
