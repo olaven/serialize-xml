@@ -232,6 +232,28 @@ test("Tiny examples from second in from README.md works", () => {
   assertEquals(full_tag, `<name key="value">children</name>`)
 });
 
+
+test("Chaining example from readme", () => {
+
+  /*
+      <?xml version="1.0"?>
+      <first_parent></first_parent>
+      <second_parent>
+          <child></child>
+      </second_parent>
+  */
+
+  const xml = serialize(
+      declaration([["version", "1.0"]]),
+      tag("first_parent"),
+      tag("second_parent", [
+        tag("child")
+      ])
+  );
+
+  assertEquals(xml, '<?xml version=\"1.0\"?><first_parent></first_parent><second_parent><child></child></second_parent>');
+});
+
 test("children can be omitted with tag function", () => {
   
   const xml = serialize(tag("name"));

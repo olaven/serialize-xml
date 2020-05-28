@@ -31,7 +31,36 @@ const xml = serialize(
 console.log("serialized: ", xml);
 ```
 
-Alternatively, you can build tags by passing an object. 
+### Serialze XML declarations
+```ts                                           TODO: RELEASE 3.2 and update other versions 
+import { serialize, declaration } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.3.2/mod.ts"; 
+const xml = serialize(declaration([["version", "1.0"]]));
+
+//prints: <?xml version="1.0"?>
+console.log("serialized declaration", xml);
+```
+
+### Multiple parens
+``typescript
+
+/*
+    <?xml version="1.0"?>
+    <first_parent></first_parent>
+    <second_parent>
+        <child></child>
+    </second_parent>
+*/
+
+const xml = serialize(
+    declaration([["version", "1.0"]]), 
+    tag("first_parent"), 
+    tag("second_parent", [
+        tag("child")
+    ])
+); 
+``
+
+### Alternatively, build tags by passing an object.  
 ```ts
 import  { serialize } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.3.1/mod.ts"
 
@@ -51,15 +80,6 @@ const xml = serialize({
 
 //prints: '<my_tag_name><sub_tag attribute_key="attribute_value">inner_content_of_tag</sub_tag></my_tag_name>'
 console.log("serialized: ", xml); 
-```
-
-Lastly, to serialze XML declarations (EXPERIMENTAL API)
-```ts                                           TODO: RELEASE 3.2 and update other versions 
-import { serialize, declaration } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.3.2/mod.ts"; 
-const xml = serialize(declaration([["version", "1.0"]]));
-
-//prints: <?xml version="1.0"?>
-console.log("serialized declaration", xml);
 ```
 
 
