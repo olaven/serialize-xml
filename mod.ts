@@ -30,26 +30,30 @@ export function declaration(attributes: [string, string][]): Declaration {
 }
 
 /**
- * Serializes given tag and its children 
- * to an XML string.  
- * @param {Tag | Declaration} node the tag (or declaration) to serialize 
- * @param {boolean} declaration the outer tag is an xml-declaration
+ * Serializes given tag and its children
+ * to an XML string.
+ * @param nodes
  */
-export function serialize(node: Tag | Declaration): string {
+export function serialize(...nodes: (Tag[] | Declaration[])): string {
 
-  const attributes = format_attributes(node);
+  return (nodes as Array<Tag | Declaration>)
+      .map((node: Tag | Declaration) => {
 
-  //NOTE: assuming that this is a Tag if name is present
-  if (node.hasOwnProperty("name")) {
-    
-    const tag = node as Tag; 
-    const children = get_children(tag);
-    return format_tag(tag.name, attributes, children);
-  } else {
+        const attributes = format_attributes(node);
 
-    return format_declaration(attributes);
-  }
-};
+        //NOTE: assuming that this is a Tag if name is present
+        if (node.hasOwnProperty("name")) {
+
+          const tag = node as Tag;
+          const children = get_children(tag);
+          return format_tag(tag.name, attributes, children);
+        } else {
+
+          return format_declaration(attributes);
+        }
+      })
+      .join("");
+}
 
 const format_declaration = (attributes: string) => `<?xml ${attributes}?>`
 
