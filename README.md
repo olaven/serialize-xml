@@ -40,7 +40,7 @@ const xml = serialize(declaration([["version", "1.0"]]));
 console.log("serialized declaration", xml);
 ```
 
-### Multiple parens
+### Multiple parents
 ```typescript
 
 /*
