@@ -10,9 +10,9 @@ export interface Tag {
 /**
   * Represents an XML declaration.
  */
- export interface Declaration {
-   attributes: [string, string][]
- }
+export interface Declaration {
+  attributes: [string, string][]
+}
 
 /**
  * Returns a `Tag`
@@ -21,7 +21,7 @@ export interface Tag {
  * @param attributes key/value attributes of the tag
  */
 export function tag(name: string, children: string | Tag[] = "", attributes: [string, string][] = []): Tag {
-  return {name, children, attributes}
+  return { name, children, attributes }
 }
 
 
@@ -37,22 +37,22 @@ export function declaration(attributes: [string, string][]): Declaration {
 export function serialize(...nodes: (Tag[] | Declaration[])): string {
 
   return (nodes as Array<Tag | Declaration>)
-      .map((node: Tag | Declaration) => {
+    .map((node: Tag | Declaration) => {
 
-        const attributes = format_attributes(node);
+      const attributes = format_attributes(node);
 
-        //NOTE: assuming that this is a Tag if name is present
-        if (node.hasOwnProperty("name")) {
+      //NOTE: assuming that this is a Tag if name is present
+      if (node.hasOwnProperty("name")) {
 
-          const tag = node as Tag;
-          const children = get_children(tag);
-          return format_tag(tag.name, attributes, children);
-        } else {
+        const tag = node as Tag;
+        const children = get_children(tag);
+        return format_tag(tag.name, attributes, children);
+      } else {
 
-          return format_declaration(attributes);
-        }
-      })
-      .join("");
+        return format_declaration(attributes);
+      }
+    })
+    .join("");
 }
 
 const format_declaration = (attributes: string) => `<?xml ${attributes}?>`
