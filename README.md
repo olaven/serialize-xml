@@ -1,15 +1,17 @@
 # serialize-xml ![Test](https://github.com/olaven/serialize-xml/workflows/Test/badge.svg) [![deno doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https/raw.githubusercontent.com/olaven/serialize-xml/v0.3.2/mod.ts) [![codebeat badge](https://codebeat.co/badges/d8b0bc93-f488-41bb-a251-8a28a8bcd1b9)](https://codebeat.co/projects/github-com-olaven-serialize-xml-master)
 A simple [deno](deno.land) module for serializing objects to XML. 
+It is also compatible with [nodejs][https://nodejs.org]. 
 
 If you or your company is benefitting from `serialize-xml`, consider becoming a [sponsor](https://github.com/sponsors/olaven/). 
 This way I can work on new features and continue to maintain it worry-free. 
 
 ## Usage 
-There is _one_ concept here:
+There is _one_ concept to understand:
 * `Tag` - representing a tag, like `<this></this>`
 
 ## Examples
 ```ts
+                                //"serialize-xml" if you're using node 
 import  { serialize, tag } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.3.2/mod.ts"
 
 //<name></name>
@@ -35,7 +37,8 @@ console.log("serialized: ", xml);
 ```
 
 ### Serialze XML declarations
-```ts                         
+```ts                     
+                                        //"serialize-xml" if you're using node     
 import { serialize, declaration } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.3.2/mod.ts"; 
 const xml = serialize(declaration([["version", "1.0"]]));
 
@@ -65,6 +68,7 @@ const xml = serialize(
 
 ### Alternatively, build tags by passing an object.  
 ```ts
+                            //"serialize-xml" if you're using node 
 import  { serialize } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.3.2/mod.ts"
 
 const xml = serialize({
