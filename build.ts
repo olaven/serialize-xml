@@ -1,18 +1,24 @@
 import { write_file } from "https://denopkg.com/olaven/dio"
 
-export const [diagnostics, emited] = await Deno.bundle(
+
+export const { files , diagnostics} = await Deno.emit(
     "./mod.ts",
-    undefined,
     {
-        declaration: true,
+        bundle: "module", 
+        compilerOptions: {
+            //NOTE: not supported currently. 
+            //FIXME: add when it is 
+            //declaration: true
+        }
     }
 );
 
-if (diagnostics) {
+if (diagnostics.length) {
 
-    console.log("error bulding ", diagnostics)
+    console.log("error building ", diagnostics)
 } else {
 
-    write_file("index.js", emited);
-    console.log("Bulit serialize-xml :)");
+    const content = files["deno:///bundle.js"]
+    write_file("index.js", content);
+    console.log("Built serialize-xml :)");
 }
