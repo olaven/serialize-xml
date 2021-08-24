@@ -1,4 +1,4 @@
-# serialize-xml ![Test](https://github.com/olaven/serialize-xml/workflows/Test/badge.svg) [![deno doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https/raw.githubusercontent.com/olaven/serialize-xml/v0.3.2/mod.ts) [![codebeat badge](https://codebeat.co/badges/d8b0bc93-f488-41bb-a251-8a28a8bcd1b9)](https://codebeat.co/projects/github-com-olaven-serialize-xml-master)
+# serialize-xml ![Test](https://github.com/olaven/serialize-xml/workflows/Test/badge.svg) [![deno doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https/raw.githubusercontent.com/olaven/serialize-xml/v0.4.0/mod.ts) [![codebeat badge](https://codebeat.co/badges/d8b0bc93-f488-41bb-a251-8a28a8bcd1b9)](https://codebeat.co/projects/github-com-olaven-serialize-xml-master)
 A simple [deno](deno.land) module for serializing objects to XML. 
 It is also compatible with [nodejs](https://nodejs.org). 
 
@@ -12,7 +12,7 @@ There is _one_ concept to understand:
 ## Examples
 ```ts
                                 //"serialize-xml" if you're using node 
-import  { serialize, tag } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.3.2/mod.ts"
+import  { serialize, tag } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.4.0/mod.ts"
 
 //<name></name>
 const without_children = serialize(tag("name"))
@@ -39,7 +39,7 @@ console.log("serialized: ", xml);
 ### Serialze XML declarations
 ```ts                     
                                         //"serialize-xml" if you're using node     
-import { serialize, declaration } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.3.2/mod.ts"; 
+import { serialize, declaration } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.4.0/mod.ts"; 
 const xml = serialize(declaration([["version", "1.0"]]));
 
 //prints: <?xml version="1.0"?>
@@ -69,7 +69,7 @@ const xml = serialize(
 ### Alternatively, build tags by passing an object.  
 ```ts
                             //"serialize-xml" if you're using node 
-import  { serialize } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.3.2/mod.ts"
+import  { serialize } from "https://raw.githubusercontent.com/olaven/serialize-xml/v0.4.0/mod.ts"
 
 const xml = serialize({
     name: "my_tag_name", 
