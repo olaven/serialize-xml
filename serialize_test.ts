@@ -291,3 +291,36 @@ test("Serialize function can chain declarations and tags with children", () => {
 
   assertEquals(xml, `<?xml version="1.0"?><parent><child></child></parent>`)
 });
+
+test("Serialize function does escape tag attributes", () => {
+
+  const xml = serialize(
+    tag("name", [], [["key", "&"]])
+  ); 
+
+  assertEquals(
+    xml, `<name key="&amp;"></name>`
+  );
+});
+
+test("Serialize function does escape tag values", () => {
+
+  const xml = serialize(
+    tag("name", "<")
+  ); 
+
+  assertEquals(
+    xml, `<name>&lt;</name>`
+  )
+}); 
+
+test("Escaping works with child tags", () => {
+
+  const xml = serialize(
+    tag("parent", [
+      tag("name", "&")
+    ])
+  ); 
+
+  assertEquals(xml, `<parent><name>&amp;</name></parent>`)
+})

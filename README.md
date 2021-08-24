@@ -89,4 +89,6 @@ const xml = serialize({
 console.log("serialized: ", xml); 
 ```
 
-
+## Escaping 
+`serialize-xml` will escape tag values and tag attributes 
+according to [the XML spec](https://www.w3.org/TR/xml/).

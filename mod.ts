@@ -60,15 +60,30 @@ const format_declaration = (attributes: string) => `<?xml ${attributes}?>`
 
 const get_children = (tag: Tag) =>
   (typeof (tag.children) === "string")
-    ? tag.children
+    ? escaped(tag.children)
     : tag.children
       .map((child) => serialize(child))
       .join("");
 
 const format_attributes = (node: Tag | Declaration) =>
   node.attributes
-    .map(([key, value]) => `${key}="${value}"`)
+    .map(([key, value]) => `${key}="${escaped(value)}"`)
     .join(" ");
+
+/**
+ * Escapes characters according 
+ * to the XML spec. 
+ * 
+ * See https://stackoverflow.com/a/1091953 
+ * for reference.
+ */
+const escaped = (string: string) =>
+  string
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
 
 const format_tag = (name: string, attributes: string, content: string) =>
   `<${name}${attributes.length > 0
