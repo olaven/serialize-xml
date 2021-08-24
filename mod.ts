@@ -70,6 +70,13 @@ const format_attributes = (node: Tag | Declaration) =>
     .map(([key, value]) => `${key}="${escaped(value)}"`)
     .join(" ");
 
+/**
+ * Escapes characters according 
+ * to the XML spec. 
+ * 
+ * See https://stackoverflow.com/a/1091953 
+ * for reference.
+ */
 const escaped = (string: string) =>
   string
     .replace(/&/g, "&amp;")
